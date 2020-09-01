@@ -1,5 +1,7 @@
 #pragma once
 
+#include "visitor/Visitor.h"
+#include "../gui/tree-gui/drawingNode.h"
 #include <memory>
 #include <tuple>
 
@@ -65,6 +67,13 @@ public:
     void print() {
         _print(std::cout, _root);
     };
+
+    /**
+     * @brief accepts a visitor, which generates a graphic interpretation of a tree
+     * @param visitor a visitor to be accepted
+     */
+    template<class Widget>
+    void acceptVisitor(const Visitor<Widget>& visitor);
 
 private:
     //temporary solution for quick testing

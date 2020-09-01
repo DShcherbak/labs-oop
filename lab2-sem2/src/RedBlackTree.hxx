@@ -329,6 +329,12 @@ void RedBlackTree<T>::_rightRotate(Node *node_x) {
 }
 
 template<typename T>
+template<class Widget>
+void RedBlackTree<T>::acceptVisitor(const Visitor<Widget>& visitor) {
+    visitor.visitRedBlackTree(_root);
+}
+
+template<typename T>
 RedBlackTreeTestable<T>::RedBlackTreeTestable() : RedBlackTree<T>() {}
 
 template<typename T>
