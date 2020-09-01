@@ -34,7 +34,7 @@ target_include_directories (${LIB_NAME}
         )
 
 option(ENABLE_TESTS "Build tests for project" ON)
-option(ENABLE_BENCHMARK "Build tests for project" ON)
+option(ENABLE_BENCHMARK "Build benchmark for project" ON)
 
 if (ENABLE_TESTS)
     enable_testing()
@@ -46,5 +46,5 @@ if (ENABLE_BENCHMARK)
 endif()
 
 # executable for quick testing in main.cpp
-add_executable(main main.cpp benchmark/benchmark.cpp)
+add_executable(main main.cpp)
 target_link_libraries(main PRIVATE ${LIB_NAME})
