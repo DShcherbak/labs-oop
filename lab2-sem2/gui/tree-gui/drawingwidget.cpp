@@ -110,7 +110,7 @@ void drawingWidget::paintEvent(QPaintEvent * /* event */)
     for(auto node : nodes){
         painter.setPen(Qt::black);
         if(node->color == Red)
-            painter.setBrush(Qt::red);
+            painter.setBrush(QColor::fromRgb(200,0,0));
         else if(node->color == Gray)
             painter.setBrush(Qt::gray);
         else if(node->color == White)
