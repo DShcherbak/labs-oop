@@ -1,5 +1,6 @@
 #pragma once
 
+#include <random>
 #include <iostream>
 #include <iterator>
 #include <ctime>
@@ -32,4 +33,5 @@ inline bool printSeedSeq(std::seed_seq &seed) {
 
     return {};
 }
+
 }

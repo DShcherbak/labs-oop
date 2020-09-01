@@ -1,0 +1,6 @@
+[submodule "lab2-sem2/benchmark/benchmark"]
+	path = lab2-sem2/benchmark/benchmark
+	url = https://github.com/google/benchmark
+[submodule "lab2-sem2/benchmark/googletest"]
+	path = lab2-sem2/benchmark/googletest
+	url = https://github.com/google/googletest

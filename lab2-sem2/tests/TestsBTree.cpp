@@ -10,9 +10,6 @@
 TEST_CASE("B-Tree test", "[B-Tree]") {
     auto &seed = utils::TestParam::seed();
 
-    //to avoid printing seed sequence multiple times
-    [[maybe_unused]] static auto print = utils::printSeedSeq(seed);
-
     auto randomInt = [&seed](int lower_bound, int upper_bound) {
         static std::mt19937_64 gen(seed);
         std::uniform_int_distribution<int> dist(lower_bound, upper_bound);
