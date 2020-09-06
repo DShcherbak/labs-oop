@@ -129,8 +129,8 @@ void MainWindow::newRedBlackTab(){
     static int number = 0;
     RedBlackTree<int>* redBlackTree = new RedBlackTree<int>();
 
-    for(int x = 0; x < 20; x++){
-        redBlackTree->insert(x);
+    for(int x = 0; x < 10; x++){
+        redBlackTree->insert(x * 2);
     }
     int id = ui->tabWidget->currentIndex();
     std::cout << "Current id is " << id << std::endl;

@@ -31,6 +31,10 @@ public:
     void setTree(drawingNode* root);
     void redraw();
 
+    BTree<int>* bTree;
+    RedBlackTree<int>* redBlackTree;
+    bool typeRedBlack = true;
+
 public slots:
     void setPen(const QPen &pen);
     void setBrush(const QBrush &brush);
@@ -48,9 +52,8 @@ private:
     bool transformed;
     QPixmap pixmap;
 
-    bool typeRedBlack = true;
-    BTree<int>* bTree;
-    RedBlackTree<int>* redBlackTree;
+
+
     drawingTree* tree;
     void drawTree();
     void drawNode(drawingNode* node, int radius, int x_left, int x_right, int y, int height);

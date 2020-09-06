@@ -23,6 +23,9 @@ public:
         return ui;
     }
 
+private slots:
+    void on_insertButton_clicked();
+
 private:
     Ui::drawingWindow *ui;
 };

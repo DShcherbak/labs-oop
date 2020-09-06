@@ -29,3 +29,27 @@ drawingWindow::~drawingWindow()
 {
     delete ui;
 }
+
+bool normalNumber(QString str){
+    for(QChar c : str){
+        if(c < '0' || c > '9')
+            return false;
+    }
+    return true;
+}
+
+void drawingWindow::on_insertButton_clicked()
+{
+    if(normalNumber(Ui()->insertLine->text())){
+        int newNumber = Ui()->insertLine->text().toInt();
+        Ui()->insertLine->clear();
+        std::cout << "New node: " << newNumber << std::endl;
+        if(Ui()->drawWidget->typeRedBlack){
+            Ui()->drawWidget->redBlackTree->insert(newNumber);
+        } else {
+            Ui()->drawWidget->bTree->insert(newNumber);
+        }
+        Ui()->drawWidget->redraw();
+    }
+
+}
