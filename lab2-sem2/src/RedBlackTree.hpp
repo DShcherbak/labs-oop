@@ -1,6 +1,6 @@
 #pragma once
 
-#include "visitor/Visitor.h"
+#include "../gui/tree-gui/Visitor.h"
 #include "../gui/tree-gui/drawingNode.h"
 #include <memory>
 #include <tuple>
@@ -28,6 +28,10 @@ protected:
         enum class Color {
             RED, BLACK
         };
+
+        bool isBlack(){
+            return color == Node::Color::BLACK;
+        }
 
         explicit Node(const value_type &key);
 
@@ -72,8 +76,8 @@ public:
      * @brief accepts a visitor, which generates a graphic interpretation of a tree
      * @param visitor a visitor to be accepted
      */
-    template<class Widget>
-    void acceptVisitor(Visitor<Widget>& visitor);
+    template<class Visitor>
+    void acceptVisitor(Visitor visitor);
 
 private:
     //temporary solution for quick testing

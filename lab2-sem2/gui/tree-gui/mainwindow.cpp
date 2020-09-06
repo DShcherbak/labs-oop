@@ -43,11 +43,11 @@ void MainWindow::closeTab(const int& index)
         return;
     }
 
-    QWidget* tabItem = ui->tabWidget->widget(index);
+    //QWidget* tabItem = ui->tabWidget->widget(index);
     ui->tabWidget->removeTab(index);
 
-    delete(tabItem);
-    tabItem = nullptr;
+    //delete(tabItem);
+    //tabItem = nullptr;
 }
 
 MainWindow::~MainWindow()
@@ -119,7 +119,7 @@ void MainWindow::newBTab(){
     tab->setLayout(newLayout);
 
     QString tabName = QString("B-Tree #%1").arg(++number);
-    ui->tabWidget->insertTab(std::max(0, ui->tabWidget->count() - 2), tab, tabName);
+    //ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tab, tabName);
     //tabs.push_back(tab);
 
     //tab->layout()->replaceWidget(widgets[id], new drawingWidget(bTree, this));
@@ -128,8 +128,10 @@ void MainWindow::newBTab(){
 void MainWindow::newRedBlackTab(){
     static int number = 0;
     RedBlackTree<int>* redBlackTree = new RedBlackTree<int>();
-    redBlackTree->insert(1);
-    redBlackTree->insert(2);
+
+    for(int x = 0; x < 20; x++){
+        redBlackTree->insert(x);
+    }
     int id = ui->tabWidget->currentIndex();
     std::cout << "Current id is " << id << std::endl;
     auto tab = ui->tabWidget->currentWidget();
@@ -153,7 +155,7 @@ void MainWindow::newRedBlackTab(){
 
 
     QString tabName = QString("Red-Black Tree #%1").arg(++number);
-    ui->tabWidget->insertTab(std::max(0, ui->tabWidget->count() - 2), tab, tabName);
+    ui->tabWidget->insertTab(ui->tabWidget->currentIndex(), tab, tabName);
     //tabs.push_back(tab);
 
     //tab->layout()->replaceWidget(widgets[id], new drawingWidget(bTree, this));

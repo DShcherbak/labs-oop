@@ -329,9 +329,9 @@ void RedBlackTree<T>::_rightRotate(Node *node_x) {
 }
 
 template<typename T>
-template<class Widget>
-void RedBlackTree<T>::acceptVisitor(Visitor<Widget>& visitor) {
-    visitor.visitRedBlackTree(_root);
+template<class Visitor>
+void RedBlackTree<T>::acceptVisitor(Visitor visitor) {
+    visitor.visitRedBlackTree((_root->parent == _root || _root == _null_node ? nullptr : _root), _null_node);
 }
 
 template<typename T>

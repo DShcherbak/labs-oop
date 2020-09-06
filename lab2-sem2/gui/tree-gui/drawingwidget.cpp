@@ -37,7 +37,6 @@ void drawingWidget::updateEvents(){
     redraw();
 }
 
-
 void drawingWidget::redraw(){
     colorCode = (colorCode + 1) % 4;
     drawTree();
@@ -62,19 +61,20 @@ void drawingWidget::drawTree(){
         return;
     }
     int maxKids = (1 << height);
-    int radius = std::min(100, width / (2 * maxKids));
-    drawNode(root, radius, 0, width, radius * 2);
+    height = 600 / height;
+    int radius = std::min(100,  width / (maxKids));
+    drawNode(root, radius, 0, width, radius, height);
 }
 
 
-void drawingWidget::drawNode(drawingNode* node, int radius, int x_left, int x_right, int y){
+void drawingWidget::drawNode(drawingNode* node, int radius, int x_left, int x_right, int y, int height){
     if(!node)
         return;
     int x = (x_left + x_right) >> 1;
     node->addDrawingParamethers(x, y, radius);
-    y += 2*radius;
-    drawNode(node->left, radius, x_left, x, y);
-    drawNode(node->right, radius, x, x_right, y);
+    y += height;
+    drawNode(node->left, radius, x_left, x, y, height);
+    drawNode(node->right, radius, x, x_right, y, height);
 
 }
 
@@ -116,6 +116,13 @@ std::pair<std::vector<drawingNode*>,std::vector<Edge>> drawingWidget::getImage(d
 }
 
 
+int getFont(int radius){
+    if(radius > 50){
+        return 30;
+    } else {
+        return 10;
+    }
+}
 
 void drawingWidget::paintEvent(QPaintEvent * /* event */)
 {
@@ -155,12 +162,16 @@ void drawingWidget::paintEvent(QPaintEvent * /* event */)
         if(node->x * node->y * node->radius == 0){
             continue;
         }
+
         painter.drawEllipse(node->x - node->radius,
                             node->y - node->radius,
                             2 * node->radius,
                             2 * node->radius);
-        painter.setFont(QFont("Arial", 30));
-        painter.drawText(node->x - 10, node->y + 12, QString::fromStdString(std::to_string(node->value)));
+        painter.setFont(QFont("Arial", getFont(nodes[0]->radius)));
+        painter.drawText(node->x - node->radius,
+                         node->y - node->radius,
+                         2 * node->radius,
+                         2 * node->radius, Qt::AlignHCenter | Qt::AlignVCenter, QString::fromStdString(std::to_string(node->value)));
 
 
     }

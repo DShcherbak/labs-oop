@@ -46,5 +46,5 @@ if (ENABLE_BENCHMARK)
 endif()
 
 # executable for quick testing in main.cpp
-add_executable(main main.cpp src/visitor/Visitor.cpp src/visitor/Visitor.h gui/tree-gui/drawingNode.h)
+add_executable(main main.cpp gui/tree-gui/Visitor.h gui/tree-gui/drawingNode.h src/visitor/TreeVisitor.h)
 target_link_libraries(main PRIVATE ${LIB_NAME})

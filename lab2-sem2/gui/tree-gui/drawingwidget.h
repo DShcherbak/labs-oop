@@ -7,7 +7,7 @@
 #include "../../src/RedBlackTree.hpp"
 #include "../../src/TreeCommands.hpp"
 #include "../../src/TreeFactory.hpp"
-#include "../../src/visitor/Visitor.h"
+#include "Visitor.h"
 #include <vector>
 #include "drawingtree.h"
 
@@ -53,7 +53,7 @@ private:
     RedBlackTree<int>* redBlackTree;
     drawingTree* tree;
     void drawTree();
-    void drawNode(drawingNode* node, int radius, int x_left, int x_right, int y);
+    void drawNode(drawingNode* node, int radius, int x_left, int x_right, int y, int height);
     std::pair<std::vector<drawingNode*>,std::vector<Edge>> getImage(drawingTree* tree);
     std::vector<drawingNode*> getNodes(drawingNode* root);
     std::vector<Edge> getEdges(drawingNode* root);
