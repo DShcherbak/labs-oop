@@ -1,3 +1,4 @@
+#include <iostream>
 #include <QToolButton>
 #include <QTableWidget>
 #include <QLabel>
@@ -26,6 +27,14 @@ MainWindow::MainWindow(QWidget *parent) :
     addTab();
     ui->tabWidget->setTabEnabled(0, true);
     connect(ui->tabWidget->tabBar(), SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
+    //check if user clicked at a tab
+    connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabSelected()));
+}
+
+void MainWindow::tabSelected(){
+    int index = ui->tabWidget->currentIndex() ;
+    std::cout << index << " is up.\n";
+    ui->tabWidget->widget(index)->layout();
 }
 
 void MainWindow::closeTab(const int& index)
@@ -35,8 +44,6 @@ void MainWindow::closeTab(const int& index)
     }
 
     QWidget* tabItem = ui->tabWidget->widget(index);
-    // Removes the tab at position index from this stack of widgets.
-    // The page widget itself is not deleted.
     ui->tabWidget->removeTab(index);
 
     delete(tabItem);
@@ -45,8 +52,6 @@ void MainWindow::closeTab(const int& index)
 
 MainWindow::~MainWindow()
 {
-    for(auto tab : buttons)
-        delete tab;
     for(auto tab : widgets)
         delete tab;
     for(auto tab : layouts)
@@ -61,22 +66,104 @@ void MainWindow::addTab()
     static int number = 0;
     QLabel *tab = new QLabel(this);
     QString tabName = QString("Tab #%1").arg(++number);
-    //tab->setText( QString("Inside %1").arg(tabName) );
     QGridLayout *centralLayout = new QGridLayout;
-    auto widget = new drawingWindow();
-
-    auto button = new QPushButton("OK");
-    widgets.push_back(widget);
+    auto widget = new choosingTreeForm();
     widget->show();
-    buttons.push_back(button);
+
     layouts.push_back(centralLayout);
-
-    QObject::connect(button, SIGNAL(released()), widget->Ui()->drawWidget, SLOT(updateEvents()));
-
     centralLayout->addWidget(widget);
-    centralLayout->addWidget(button);
     tab->setLayout(centralLayout);
 
-    ui->tabWidget->insertTab( ui->tabWidget->count() - 1, tab, tabName);
+    ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tab, tabName);
     tabs.push_back(tab);
+    forms.push_back(widget);
+    connect(widget->Ui()->BTreeButton, SIGNAL(clicked()), this, SLOT(newBTab()));
+    connect(widget->Ui()->RedBlackTreeButton, SIGNAL(clicked()), this, SLOT(newRedBlackTab()));
 }
+
+void deleteLayout(QLayout* layout){
+    QLayoutItem * item;
+    QLayout * sublayout;
+    QWidget * oldWidget;
+    while ((item = layout->takeAt(0))) {
+        if ((sublayout = item->layout()) != 0) {/* do the same for sublayout*/}
+        else if ((oldWidget = item->widget()) != 0) {oldWidget->hide(); delete oldWidget;}
+        else {delete item;}
+    }
+    delete layout;
+}
+
+
+void MainWindow::newBTab(){
+    static int number = 0;
+    BTree<int>* bTree = new BTree<int>();
+    int id = ui->tabWidget->currentIndex();
+    std::cout << "Current id is " << id << std::endl;
+    auto tab = ui->tabWidget->currentWidget();
+
+    auto layout = tab->layout();
+    deleteLayout(layout);
+
+    auto newLayout = new QGridLayout();
+    auto widget = new drawingWindow();
+
+    widgets.push_back(widget->Ui()->drawWidget);
+    widget->show();
+    layouts.push_back(newLayout);
+
+    widget->Ui()->drawWidget->updateEvents();
+
+    newLayout->addWidget(widget);
+    tab->setLayout(newLayout);
+
+    QString tabName = QString("B-Tree #%1").arg(++number);
+    ui->tabWidget->insertTab(std::max(0, ui->tabWidget->count() - 2), tab, tabName);
+    //tabs.push_back(tab);
+
+    //tab->layout()->replaceWidget(widgets[id], new drawingWidget(bTree, this));
+}
+
+void MainWindow::newRedBlackTab(){
+    static int number = 0;
+    RedBlackTree<int>* redBlackTree = new RedBlackTree<int>();
+    int id = ui->tabWidget->currentIndex();
+    std::cout << "Current id is " << id << std::endl;
+    auto tab = ui->tabWidget->currentWidget();
+
+    auto layout = tab->layout();
+    deleteLayout(layout);
+
+    auto newLayout = new QGridLayout();
+    auto widget = new drawingWindow();
+
+    widgets.push_back(widget->Ui()->drawWidget);
+    widget->show();
+    layouts.push_back(newLayout);
+
+    widget->Ui()->drawWidget->updateEvents();
+
+    newLayout->addWidget(widget);
+    tab->setLayout(newLayout);
+
+    QString tabName = QString("Red-Black Tree #%1").arg(++number);
+    ui->tabWidget->insertTab(std::max(0, ui->tabWidget->count() - 2), tab, tabName);
+    //tabs.push_back(tab);
+
+    //tab->layout()->replaceWidget(widgets[id], new drawingWidget(bTree, this));
+}
+
+/*
+new drawingWindow();
+
+    widgets.push_back(widget->Ui()->drawWidget);
+    widget->show();
+    layouts.push_back(centralLayout);
+
+    widget->Ui()->drawWidget->updateEvents();
+
+    centralLayout->addWidget(widget);
+    tab->setLayout(centralLayout);
+
+    ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tab, tabName);
+    tabs.push_back(tab);
+ * */

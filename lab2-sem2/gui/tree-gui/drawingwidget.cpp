@@ -3,13 +3,41 @@
 
 drawingWidget::drawingWidget(QWidget *parent) : QWidget(parent)
 {
+    //bTree = _binaryTree;
+
     tree = new drawingTree(testTree1());
+
+    update();
 }
+
+drawingWidget::drawingWidget(BTree<int>* _bTree, QWidget *parent) : QWidget(parent)
+{
+    bTree = _bTree;
+
+    tree = new drawingTree(testTree1());
+
+    update();
+}
+
+drawingWidget::drawingWidget(RedBlackTree<int>* _redBlackTree, QWidget *parent) : QWidget(parent)
+{
+    redBlackTree = _redBlackTree;
+
+    tree = new drawingTree(testTree1());
+
+    update();
+}
+
 
 drawingWidget::~drawingWidget()
 {
+    if(bTree)
+        delete bTree;
+    if(redBlackTree)
+        delete redBlackTree;
     delete tree;
 }
+
 
 void drawingWidget::setPen(const QPen &pen)
 {
@@ -17,17 +45,20 @@ void drawingWidget::setPen(const QPen &pen)
     //update();
 }
 
+
 void drawingWidget::setBrush(const QBrush &brush)
 {
     this->brush = brush;
     //update();
 }
 
+
 void drawingWidget::updateEvents(){
     colorCode = (colorCode + 1) % 4;
     drawTree();
     update();
 }
+
 
 void drawingWidget::drawTree(){
     auto root = tree->root;
@@ -42,6 +73,7 @@ void drawingWidget::drawTree(){
     drawNode(root, radius, 0, width, radius * 2);
 }
 
+
 void drawingWidget::drawNode(drawingNode* node, int radius, int x_left, int x_right, int y){
     if(!node)
         return;
@@ -52,6 +84,7 @@ void drawingWidget::drawNode(drawingNode* node, int radius, int x_left, int x_ri
     drawNode(node->right, radius, x, x_right, y);
 
 }
+
 
 std::vector<drawingNode*> drawingWidget::getNodes(drawingNode* root){
     if(root == nullptr)
@@ -64,6 +97,7 @@ std::vector<drawingNode*> drawingWidget::getNodes(drawingNode* root){
     result.push_back(root);
     return result;
 }
+
 
 std::vector<Edge> drawingWidget::getEdges(drawingNode* root){
     if(root == nullptr || !root->gotCoordinates())
@@ -82,6 +116,7 @@ std::vector<Edge> drawingWidget::getEdges(drawingNode* root){
     }
     return result;
 }
+
 
 std::pair<std::vector<drawingNode*>,std::vector<Edge>> drawingWidget::getImage(drawingTree* tree){
     return {getNodes(tree->root), getEdges(tree->root)};

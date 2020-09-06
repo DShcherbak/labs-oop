@@ -3,6 +3,11 @@
 
 #include <QtWidgets>
 #include <QPainter>
+#include "../../src/BTree.hpp"
+#include "../../src/RedBlackTree.hpp"
+#include "../../src/TreeCommands.hpp"
+#include "../../src/TreeFactory.hpp"
+#include "../../src/visitor/Visitor.h"
 #include <vector>
 #include "drawingtree.h"
 
@@ -19,7 +24,12 @@ class drawingWidget : public QWidget
     Q_OBJECT
 public:
     explicit drawingWidget(QWidget *parent = 0);
+    drawingWidget(BTree<int>* _bTree, QWidget *parent = nullptr);
+    drawingWidget(RedBlackTree<int>* _redBlackTree, QWidget *parent = nullptr);
     ~drawingWidget();
+
+    void setBTree(BTree<int>* _bTree);
+    void setRedBlackTree(RedBlackTree<int>* _redBlackTree);
 
 
 public slots:
@@ -39,6 +49,8 @@ private:
     bool transformed;
     QPixmap pixmap;
 
+    BTree<int>* bTree;
+    RedBlackTree<int>* redBlackTree;
     drawingTree* tree;
     void drawTree();
     void drawNode(drawingNode* node, int radius, int x_left, int x_right, int y);

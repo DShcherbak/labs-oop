@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "drawingwidget.h"
+#include "choosingtreeform.h"
 #include "drawingwindow.h"
 #include <QMainWindow>
 #include <QDesktopWidget>
@@ -28,15 +29,20 @@ public:
 public slots:
     void addTab();
     void closeTab(const int& index);
+    void tabSelected();
+
+    void newBTab();
+    void newRedBlackTab();
 
 private:
     std::vector<QLabel*> tabs;
-    std::vector<QWidget*> widgets;
+    std::vector<drawingWidget*> widgets;
+    std::vector<choosingTreeForm*> forms;
     std::vector<QPushButton*> buttons;
     std::vector<QGridLayout*> layouts;
 
     Ui::MainWindow *ui;
-    drawingWidget* widget;
+    //drawingWidget* widget;
 };
 
 #endif // MAINWINDOW_H

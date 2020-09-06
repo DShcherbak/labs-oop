@@ -32,7 +32,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="insertButton">
    <property name="geometry">
     <rect>
      <x>1190</x>
@@ -45,7 +45,7 @@
     <string>Insert</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="insertLine">
    <property name="geometry">
     <rect>
      <x>1050</x>
@@ -55,7 +55,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="searchButton">
    <property name="geometry">
     <rect>
      <x>1190</x>
@@ -68,7 +68,7 @@
     <string>Search</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="searchLine">
    <property name="geometry">
     <rect>
      <x>1050</x>
@@ -78,7 +78,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_3">
+  <widget class="QPushButton" name="deleteButtton">
    <property name="geometry">
     <rect>
      <x>1190</x>
@@ -91,7 +91,7 @@
     <string>Delete</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="deleteLine">
    <property name="geometry">
     <rect>
      <x>1050</x>
