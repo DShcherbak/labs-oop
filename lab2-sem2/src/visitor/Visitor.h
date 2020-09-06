@@ -13,6 +13,9 @@ public:
     template<class T>
     void visitBTree(T root);
 
+    Visitor(Widget* widget){
+        drawingWidget = widget;
+    }
 
 
 private:

@@ -1,7 +1,7 @@
 #include "Visitor.h"
 
-template <class Widget>
 template <class T>
+template <class Widget>
 void Visitor<Widget>::visitRedBlackTree(T root) {
     drawingWidget->setTree(getSubTree(root));
     drawingWidget->redraw();

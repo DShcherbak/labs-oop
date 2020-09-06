@@ -5,29 +5,10 @@ drawingWidget::drawingWidget(QWidget *parent) : QWidget(parent)
 {
     //bTree = _binaryTree;
 
-    tree = new drawingTree(testTree1());
+    //tree = new drawingTree(testTree1());
 
     update();
 }
-
-drawingWidget::drawingWidget(BTree<int>* _bTree, QWidget *parent) : QWidget(parent)
-{
-    bTree = _bTree;
-
-    tree = new drawingTree(testTree1());
-
-    update();
-}
-
-drawingWidget::drawingWidget(RedBlackTree<int>* _redBlackTree, QWidget *parent) : QWidget(parent)
-{
-    redBlackTree = _redBlackTree;
-
-    tree = new drawingTree(testTree1());
-
-    update();
-}
-
 
 drawingWidget::~drawingWidget()
 {
@@ -52,8 +33,12 @@ void drawingWidget::setBrush(const QBrush &brush)
     //update();
 }
 
-
 void drawingWidget::updateEvents(){
+    redraw();
+}
+
+
+void drawingWidget::redraw(){
     colorCode = (colorCode + 1) % 4;
     drawTree();
     update();
@@ -61,6 +46,14 @@ void drawingWidget::updateEvents(){
 
 
 void drawingWidget::drawTree(){
+    Visitor<drawingWidget> visitor = Visitor(this);
+    if(typeRedBlack){
+        redBlackTree->acceptVisitor(visitor);
+    } else {
+        //bTree->acceptVisitor(visitor);
+    }
+    if(!tree || !tree->root)
+        return;
     auto root = tree->root;
     const int width = 1000; //TODO: fix width to correspond with windowsize
     int height = tree->getHeight();
@@ -131,6 +124,11 @@ void drawingWidget::paintEvent(QPaintEvent * /* event */)
 
     auto image = getImage(tree);
     std::vector<drawingNode*> nodes = std::move(image.first);
+    if(nodes.empty()){
+        painter.setFont(QFont("Arial", 30));
+        painter.drawText(100,100, QString::fromStdString("Tree is empty.\n"));
+        return;
+    }
     std::vector<Edge> edges = std::move(image.second);
     for(auto edge : edges){
         QPen pen;
@@ -166,6 +164,19 @@ void drawingWidget::paintEvent(QPaintEvent * /* event */)
 
 
     }
+}
+
+void drawingWidget::setBTree(BTree<int>* _bTree){
+    bTree = _bTree;
+    typeRedBlack = false;
+}
+void drawingWidget::setRedBlackTree(RedBlackTree<int>* _redBlackTree){
+    redBlackTree = _redBlackTree;
+    typeRedBlack = true;
+}
+
+void drawingWidget::setTree(drawingNode* root){
+    tree = new drawingTree(root);
 }
 
 

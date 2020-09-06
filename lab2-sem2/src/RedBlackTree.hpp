@@ -73,7 +73,7 @@ public:
      * @param visitor a visitor to be accepted
      */
     template<class Widget>
-    void acceptVisitor(const Visitor<Widget>& visitor);
+    void acceptVisitor(Visitor<Widget>& visitor);
 
 private:
     //temporary solution for quick testing

@@ -23,7 +23,6 @@ drawingWindow::drawingWindow(RedBlackTree<int>* _redBlackTree, QWidget *parent):
     ui(new Ui::drawingWindow)
 {
     ui->setupUi(this);
-    ui->drawWidget->setRedBlackTree(_redBlackTree);
 }
 
 drawingWindow::~drawingWindow()

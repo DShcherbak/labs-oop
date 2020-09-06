@@ -24,13 +24,12 @@ class drawingWidget : public QWidget
     Q_OBJECT
 public:
     explicit drawingWidget(QWidget *parent = 0);
-    drawingWidget(BTree<int>* _bTree, QWidget *parent = nullptr);
-    drawingWidget(RedBlackTree<int>* _redBlackTree, QWidget *parent = nullptr);
     ~drawingWidget();
 
     void setBTree(BTree<int>* _bTree);
     void setRedBlackTree(RedBlackTree<int>* _redBlackTree);
-
+    void setTree(drawingNode* root);
+    void redraw();
 
 public slots:
     void setPen(const QPen &pen);
@@ -49,6 +48,7 @@ private:
     bool transformed;
     QPixmap pixmap;
 
+    bool typeRedBlack = true;
     BTree<int>* bTree;
     RedBlackTree<int>* redBlackTree;
     drawingTree* tree;

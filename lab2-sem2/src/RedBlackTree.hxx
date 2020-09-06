@@ -330,7 +330,7 @@ void RedBlackTree<T>::_rightRotate(Node *node_x) {
 
 template<typename T>
 template<class Widget>
-void RedBlackTree<T>::acceptVisitor(const Visitor<Widget>& visitor) {
+void RedBlackTree<T>::acceptVisitor(Visitor<Widget>& visitor) {
     visitor.visitRedBlackTree(_root);
 }
 

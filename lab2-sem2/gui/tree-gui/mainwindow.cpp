@@ -107,11 +107,13 @@ void MainWindow::newBTab(){
     auto newLayout = new QGridLayout();
     auto widget = new drawingWindow();
 
+    widget->Ui()->drawWidget->setBTree(bTree);
+    widget->Ui()->drawWidget->redraw();
     widgets.push_back(widget->Ui()->drawWidget);
     widget->show();
     layouts.push_back(newLayout);
 
-    widget->Ui()->drawWidget->updateEvents();
+    widget->Ui()->drawWidget->redraw();
 
     newLayout->addWidget(widget);
     tab->setLayout(newLayout);
@@ -126,6 +128,8 @@ void MainWindow::newBTab(){
 void MainWindow::newRedBlackTab(){
     static int number = 0;
     RedBlackTree<int>* redBlackTree = new RedBlackTree<int>();
+    redBlackTree->insert(1);
+    redBlackTree->insert(2);
     int id = ui->tabWidget->currentIndex();
     std::cout << "Current id is " << id << std::endl;
     auto tab = ui->tabWidget->currentWidget();
@@ -135,15 +139,18 @@ void MainWindow::newRedBlackTab(){
 
     auto newLayout = new QGridLayout();
     auto widget = new drawingWindow();
+    widget->Ui()->drawWidget->setRedBlackTree(redBlackTree);
+    widget->Ui()->drawWidget->redraw();
 
     widgets.push_back(widget->Ui()->drawWidget);
     widget->show();
     layouts.push_back(newLayout);
 
-    widget->Ui()->drawWidget->updateEvents();
+    widget->Ui()->drawWidget->redraw();
 
     newLayout->addWidget(widget);
     tab->setLayout(newLayout);
+
 
     QString tabName = QString("Red-Black Tree #%1").arg(++number);
     ui->tabWidget->insertTab(std::max(0, ui->tabWidget->count() - 2), tab, tabName);
