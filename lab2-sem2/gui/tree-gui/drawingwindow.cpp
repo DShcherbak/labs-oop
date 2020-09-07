@@ -38,11 +38,10 @@ bool normalNumber(QString str){
     return true;
 }
 
-void drawingWindow::on_insertButton_clicked()
-{
-    if(normalNumber(Ui()->insertLine->text())){
-        int newNumber = Ui()->insertLine->text().toInt();
-        Ui()->insertLine->clear();
+void drawingWindow::insertNode(QLineEdit* line){
+    if(normalNumber(line->text())){
+        int newNumber = line->text().toInt();
+        line->clear();
         std::cout << "New node: " << newNumber << std::endl;
         if(Ui()->drawWidget->typeRedBlack){
             Ui()->drawWidget->redBlackTree->insert(newNumber);
@@ -51,5 +50,36 @@ void drawingWindow::on_insertButton_clicked()
         }
         Ui()->drawWidget->redraw();
     }
+}
 
+void drawingWindow::on_insertButton_clicked()
+{
+    insertNode(Ui()->insertLine);
+}
+
+void drawingWindow::on_insertLine_returnPressed()
+{
+    insertNode(Ui()->insertLine);
+}
+
+void drawingWindow::deleteNode(QLineEdit* line){
+    if(normalNumber(line->text())){
+        int newNumber = line->text().toInt();
+        line->clear();
+        std::cout << "Delete node: " << newNumber << std::endl;
+        if(Ui()->drawWidget->typeRedBlack){
+            Ui()->drawWidget->redBlackTree->remove(newNumber);
+        } else {
+            Ui()->drawWidget->bTree->remove(newNumber);
+        }
+        Ui()->drawWidget->redraw();
+    }
+}
+
+void drawingWindow::on_deleteButtton_clicked(){
+    deleteNode(Ui()->deleteLine);
+}
+
+void drawingWindow::on_deleteLine_returnPressed(){
+    deleteNode(Ui()->deleteLine);
 }

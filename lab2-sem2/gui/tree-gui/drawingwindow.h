@@ -26,8 +26,17 @@ public:
 private slots:
     void on_insertButton_clicked();
 
+    void on_insertLine_returnPressed();
+
+    void on_deleteButtton_clicked();
+
+    void on_deleteLine_returnPressed();
+
 private:
     Ui::drawingWindow *ui;
+    void deleteNode(QLineEdit* line);
+    void insertNode(QLineEdit* line);
+    bool searchNode(QLineEdit* line);
 };
 
 #endif // DRAWINGWINDOW_H

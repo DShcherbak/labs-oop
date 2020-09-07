@@ -75,10 +75,12 @@ void MainWindow::addTab()
     tab->setLayout(centralLayout);
 
     ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tab, tabName);
+    ui->tabWidget->setCurrentWidget(ui->tabWidget->widget(ui->tabWidget->count() - 1));
     tabs.push_back(tab);
     forms.push_back(widget);
     connect(widget->Ui()->BTreeButton, SIGNAL(clicked()), this, SLOT(newBTab()));
     connect(widget->Ui()->RedBlackTreeButton, SIGNAL(clicked()), this, SLOT(newRedBlackTab()));
+
 }
 
 void deleteLayout(QLayout* layout){
@@ -129,8 +131,8 @@ void MainWindow::newRedBlackTab(){
     static int number = 0;
     RedBlackTree<int>* redBlackTree = new RedBlackTree<int>();
 
-    for(int x = 0; x < 10; x++){
-        redBlackTree->insert(x * 2);
+    for(int x = 0; x < 20; x++){
+     //   redBlackTree->insert(x * 2);
     }
     int id = ui->tabWidget->currentIndex();
     std::cout << "Current id is " << id << std::endl;
@@ -156,23 +158,8 @@ void MainWindow::newRedBlackTab(){
 
     QString tabName = QString("Red-Black Tree #%1").arg(++number);
     ui->tabWidget->insertTab(ui->tabWidget->currentIndex(), tab, tabName);
+    //ui->tabWidget->setCurrentWidget(ui->tabWidget->findChild())
     //tabs.push_back(tab);
 
     //tab->layout()->replaceWidget(widgets[id], new drawingWidget(bTree, this));
 }
-
-/*
-new drawingWindow();
-
-    widgets.push_back(widget->Ui()->drawWidget);
-    widget->show();
-    layouts.push_back(centralLayout);
-
-    widget->Ui()->drawWidget->updateEvents();
-
-    centralLayout->addWidget(widget);
-    tab->setLayout(centralLayout);
-
-    ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tab, tabName);
-    tabs.push_back(tab);
- * */
