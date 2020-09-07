@@ -27,6 +27,8 @@ void drawingWindow::redrawBorders(){
     Ui()->searchLine->setStyleSheet("border: 1px solid black");
 }
 
+
+
 void drawingWindow::insertNode(QLineEdit* line){
     if(normalNumber(line->text())){
         int newNumber = line->text().toInt();
@@ -54,6 +56,7 @@ void drawingWindow::on_insertLine_returnPressed()
     redrawBorders();
     insertNode(Ui()->insertLine);
 }
+
 
 void drawingWindow::deleteNode(QLineEdit* line){
     if(normalNumber(line->text())){
@@ -89,6 +92,8 @@ void drawingWindow::on_deleteLine_returnPressed(){
     deleteNode(Ui()->deleteLine);
 }
 
+
+
 void drawingWindow::searchNode(QLineEdit* line){
     int newNumber;
     bool found = false;
@@ -113,7 +118,6 @@ void drawingWindow::searchNode(QLineEdit* line){
         Ui()->drawWidget->findAndMark(newNumber);
     }
 }
-
 
 void drawingWindow::on_searchButton_clicked()
 {

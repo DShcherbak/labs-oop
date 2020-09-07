@@ -78,6 +78,13 @@ public:
         _print(std::cout, _root);
     }
 
+    /**
+     * @brief accepts a visitor, which generates a graphic interpretation of a tree
+     * @param visitor a visitor to be accepted
+     */
+    template<class Visitor>
+    void acceptVisitor(Visitor visitor);
+
 private:
     //temporary solution for quick testing
     //TODO:: remove;

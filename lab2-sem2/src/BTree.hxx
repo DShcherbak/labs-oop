@@ -282,6 +282,12 @@ bool BTree<T>::_searchImpl(std::shared_ptr<Node> node, const value_type &key) {
 }
 
 template<typename T>
+template<class Visitor>
+void BTree<T>::acceptVisitor(Visitor visitor) {
+    visitor.visitBTree(_root);
+}
+
+template<typename T>
 BTreeTestable<T>::BTreeTestable(std::size_t min_degree) : BTree<T>(min_degree) {}
 
 template<typename T>

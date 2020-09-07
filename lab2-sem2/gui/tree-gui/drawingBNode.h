@@ -1,32 +1,27 @@
 #ifndef LAB_DRAWINGBNODE_H
 #define LAB_DRAWINGBNODE_H
 
-
+#include <memory>
 #include <vector>
 
 struct drawingBNode{
     std::vector<int> value;
-    drawingNode* parent;
-    drawingNode* left;
-    drawingNode* right;
-    drawingColor color;
-    int x = 0, y = 0, radius = 0;
+    std::shared_ptr<drawingBNode> parent;
+    std::vector<std::shared_ptr<drawingBNode>> children;
+    int x = 0, y = 0, size = 0;
 
-    drawingBNode(std::vector<int> _value, drawingColor _color = White,
-                drawingNode* _parent = nullptr,
-                drawingNode* _left = nullptr,
-                drawingNode* _right = nullptr){
+    drawingBNode(std::vector<int> _value,
+                std::shared_ptr<drawingBNode> _parent = nullptr,
+                 std::vector<std::shared_ptr<drawingBNode>> _children = {}){
         value = std::move(_value);
-        color = _color;
         parent = _parent;
-        left = _left;
-        right = _right;
+        children = std::move(_children);
     }
 
-    void addDrawingParamethers(int _x, int _y, int _r){
+    void addDrawingParamethers(int _x, int _y, int a){
         x = _x;
         y = _y;
-        radius = _r;
+        size = a;
     }
 
     bool gotCoordinates(){return x * y != 0;}

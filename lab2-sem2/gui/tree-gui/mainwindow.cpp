@@ -99,6 +99,7 @@ void deleteLayout(QLayout* layout){
 void MainWindow::newBTab(){
     static int number = 0;
     BTree<int>* bTree = new BTree<int>();
+    bTree->insert(1);
     int id = ui->tabWidget->currentIndex();
     std::cout << "Current id is " << id << std::endl;
     auto tab = ui->tabWidget->currentWidget();

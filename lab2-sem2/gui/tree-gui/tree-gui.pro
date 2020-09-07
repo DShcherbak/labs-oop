@@ -9,6 +9,7 @@ CONFIG += c++17
 
 SOURCES += main.cpp\
         choosingtreeform.cpp \
+        drawingbtree.cpp \
         drawingtree.cpp \
         drawingwidget.cpp \
         drawingwindow.cpp \
@@ -16,6 +17,7 @@ SOURCES += main.cpp\
 
 HEADERS  += mainwindow.h \
     choosingtreeform.h \
+    drawingbtree.h \
     drawingtree.h \
     drawingwidget.h \
     drawingwindow.h
