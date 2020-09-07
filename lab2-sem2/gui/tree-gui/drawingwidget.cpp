@@ -157,7 +157,7 @@ void drawingWidget::getBNodes(std::shared_ptr<drawingBNode> root, std::vector<st
 }
 
 
-void drawingWidget::getBEdges(std::shared_ptr<drawingBNode> root, std::vector<Edge> base){
+void drawingWidget::getBEdges(std::shared_ptr<drawingBNode> root, std::vector<Edge>& base){
     if(root == nullptr || !root->gotCoordinates() || root->children.empty())
         return;
     for(auto ch : root->children){
@@ -167,9 +167,9 @@ void drawingWidget::getBEdges(std::shared_ptr<drawingBNode> root, std::vector<Ed
     int x = root->x, y = root->y + root->size;
     for(int i = 0, n = root->children.size(); i < n; i++){
         auto child = root->children[i];
-        int child_x = (child->x + (child->value.size() * child->size)) >> 1;
+        int child_x = (child->x + (child->x + child->value.size() * child->size)) >> 1;
         int child_y = child->y;
-        base.push_back({x,y,child_x, child_y});
+        base.push_back({x + i*root->size,y,child_x, child_y});
     }
     /*
     if(root->left && root->left->gotCoordinates()){

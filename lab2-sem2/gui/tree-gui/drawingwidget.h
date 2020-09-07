@@ -72,7 +72,7 @@ private:
     std::vector<Edge> getEdges(std::shared_ptr<drawingNode> root);
 
     void getBNodes(std::shared_ptr<drawingBNode> root, std::vector<std::shared_ptr<drawingBNode>>& base);
-    void getBEdges(std::shared_ptr<drawingBNode> root, std::vector<Edge> base);
+    void getBEdges(std::shared_ptr<drawingBNode> root, std::vector<Edge>& base);
     std::pair<std::vector<std::shared_ptr<drawingBNode>>,std::vector<Edge>> getBImage(std::shared_ptr<drawingBTree> tree);
 
 };

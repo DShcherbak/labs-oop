@@ -54,8 +54,8 @@ std::pair<int,int> drawingBTree::getSize(){
 
     std::vector<std::shared_ptr<drawingBNode>> leafes;
     int max_height = dfs(root, leafes, leafes_count, leafes_capacity);
-    int capacity = leafes_capacity + leafes_count + 1;
-    const int W = 1000;
+    int capacity = leafes_capacity + 2*leafes_count + 1; //TODO: WHY 2* ?????
+    const int W = 800;
     const int H = 600;
     int size = std::min(50,W / capacity);
     int y_size = H / (max_height + 1);
