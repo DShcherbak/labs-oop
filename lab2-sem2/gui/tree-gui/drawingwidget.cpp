@@ -43,6 +43,10 @@ void drawingWidget::redraw(){
     update();
 }
 
+void drawingWidget::quickRedraw(){
+    update();
+}
+
 
 void drawingWidget::drawTree(){
     Visitor<drawingWidget> visitor = Visitor(this);
@@ -119,8 +123,12 @@ std::pair<std::vector<drawingNode*>,std::vector<Edge>> drawingWidget::getImage(d
 int getFont(int radius){
     if(radius > 50){
         return 30;
-    } else {
+    } else if(radius > 30){
+        return 20;
+    } else if(radius > 10){
         return 10;
+    } else {
+        return 6;
     }
 }
 
@@ -155,6 +163,8 @@ void drawingWidget::paintEvent(QPaintEvent * /* event */)
             painter.setBrush(Qt::gray);
         else if(node->color == White)
             painter.setBrush(Qt::white);
+        else if(node->color == Green)
+            painter.setBrush(QColor::fromRgb(0,200,0));
         else{
             painter.setBrush(Qt::black);
             painter.setPen(Qt::white);
@@ -189,6 +199,29 @@ void drawingWidget::setRedBlackTree(RedBlackTree<int>* _redBlackTree){
 void drawingWidget::setTree(drawingNode* root){
     tree = new drawingTree(root);
 }
+
+void drawingWidget::findAndMark(int number, drawingNode* node){
+    if(typeRedBlack){
+        if(!node)
+            node = tree->root;
+        while(node != nullptr){
+            if(node->value == number){
+                //auto prev_color = node->color;
+                node->color = Green;
+                quickRedraw();
+                //node->color = prev_color;
+                break;
+            }
+            else if(node->value > number){
+                node = node->left;
+            }
+            else {
+                node = node->right;
+            }
+        }
+    }
+}
+
 
 
 

@@ -30,6 +30,8 @@ public:
     void setRedBlackTree(RedBlackTree<int>* _redBlackTree);
     void setTree(drawingNode* root);
     void redraw();
+    void quickRedraw();
+    void findAndMark(int number, drawingNode* node = nullptr);
 
     BTree<int>* bTree;
     RedBlackTree<int>* redBlackTree;
@@ -53,9 +55,9 @@ private:
     QPixmap pixmap;
 
 
-
     drawingTree* tree;
     void drawTree();
+
     void drawNode(drawingNode* node, int radius, int x_left, int x_right, int y, int height);
     std::pair<std::vector<drawingNode*>,std::vector<Edge>> getImage(drawingTree* tree);
     std::vector<drawingNode*> getNodes(drawingNode* root);

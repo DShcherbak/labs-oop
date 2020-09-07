@@ -32,11 +32,17 @@ private slots:
 
     void on_deleteLine_returnPressed();
 
+    void on_searchButton_clicked();
+
+    void on_searchLine_returnPressed();
+
 private:
     Ui::drawingWindow *ui;
+    void redrawBorders();
     void deleteNode(QLineEdit* line);
     void insertNode(QLineEdit* line);
-    bool searchNode(QLineEdit* line);
+    void searchNode(QLineEdit* line);
+
 };
 
 #endif // DRAWINGWINDOW_H
