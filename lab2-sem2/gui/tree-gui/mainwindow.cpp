@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->addTab(new QLabel("You can add tabs by pressing <b>\"+\"</b>"), QString());
     ui->tabWidget->tabBar()->setTabButton(0, QTabBar::RightSide, tb);
     ui->tabWidget->tabBar()->setTabsClosable(true);
-    addTab();
+    //addTab();
     ui->tabWidget->setTabEnabled(0, true);
     connect(ui->tabWidget->tabBar(), SIGNAL(tabCloseRequested(int)), this, SLOT(closeTab(int)));
     //check if user clicked at a tab
@@ -69,6 +69,7 @@ void MainWindow::addTab()
     QGridLayout *centralLayout = new QGridLayout;
     auto widget = new choosingTreeForm();
     widget->show();
+    int id = ui->tabWidget->count()-1;
 
     layouts.push_back(centralLayout);
     centralLayout->addWidget(widget);
@@ -80,6 +81,8 @@ void MainWindow::addTab()
     forms.push_back(widget);
     connect(widget->Ui()->BTreeButton, SIGNAL(clicked()), this, SLOT(newBTab()));
     connect(widget->Ui()->RedBlackTreeButton, SIGNAL(clicked()), this, SLOT(newRedBlackTab()));
+    ui->tabWidget->insertTab(id, tab, tabName);
+    ui->tabWidget->setCurrentIndex(id);
 
 }
 
@@ -122,6 +125,8 @@ void MainWindow::newBTab(){
     tab->setLayout(newLayout);
 
     QString tabName = QString("B-Tree #%1").arg(++number);
+    ui->tabWidget->insertTab(id, tab, tabName);
+    ui->tabWidget->setCurrentIndex(id);
     //ui->tabWidget->insertTab(ui->tabWidget->count() - 1, tab, tabName);
     //tabs.push_back(tab);
 
@@ -157,9 +162,10 @@ void MainWindow::newRedBlackTab(){
     tab->setLayout(newLayout);
 
 
+
     QString tabName = QString("Red-Black Tree #%1").arg(++number);
-    ui->tabWidget->insertTab(ui->tabWidget->currentIndex(), tab, tabName);
-    //ui->tabWidget->setCurrentWidget(ui->tabWidget->findChild())
+    ui->tabWidget->insertTab(id, tab, tabName);
+    ui->tabWidget->setCurrentIndex(id);
     //tabs.push_back(tab);
 
     //tab->layout()->replaceWidget(widgets[id], new drawingWidget(bTree, this));
