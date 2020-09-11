@@ -234,6 +234,7 @@ void paintNode(QPainter& painter, std::shared_ptr<drawingNode> node){
                      2 * node->radius,
                      2 * node->radius, Qt::AlignHCenter | Qt::AlignVCenter, QString::fromStdString(std::to_string(node->value)));
 }
+
 void paintNode(QPainter& painter, std::shared_ptr<drawingBNode> node){
     painter.setPen(Qt::black);
     painter.setBrush(Qt::white);
@@ -251,12 +252,26 @@ void paintNode(QPainter& painter, std::shared_ptr<drawingBNode> node){
     }
 }
 
+void paintEdges(QPainter& painter, const std::vector<Edge> &edges){
+    for(auto edge : edges){
+        QPen pen;
+        pen.setWidth(3);
+        pen.setBrush(Qt::black);
+        painter.setPen(pen);
+        painter.drawLine(edge.x1,
+                         edge.y1,
+                         edge.x2,
+                         edge.y2);
+    }
+}
+
 void drawingWidget::paintTree(QPainter &painter){
     std::vector<Edge> edges;
     if(typeRedBlack){
         auto image = getImage(drawing_tree);
         auto nodes = std::move(image.first);
         edges = std::move(image.second);
+        paintEdges(painter, edges);
         if(nodes.empty()){
             painter.setFont(QFont("Arial", 30));
             painter.drawText(100,100, QString::fromStdString("Tree is empty.\n"));
@@ -269,6 +284,7 @@ void drawingWidget::paintTree(QPainter &painter){
         auto image = getBImage(drawing_b_tree);
         auto nodes = std::move(image.first);
         edges = std::move(image.second);
+        paintEdges(painter, edges);
         if(nodes.empty()){
             painter.setFont(QFont("Arial", 30));
             painter.drawText(100,100, QString::fromStdString("Tree is empty.\n"));
@@ -278,17 +294,30 @@ void drawingWidget::paintTree(QPainter &painter){
             paintNode(painter, node);
         }
     }
-    for(auto edge : edges){
-        QPen pen;
-        pen.setWidth(3);
-        pen.setBrush(Qt::black);
-        painter.setPen(pen);
-        painter.drawLine(edge.x1,
-                         edge.y1,
-                         edge.x2,
-                         edge.y2);
-    }
 
+}
+
+void drawingWidget::paintBorder(QPainter &painter){
+    if(border == nullptr)
+        return;
+    int x = border->x;
+    int y = border->y;
+    int size = border->size;
+    pen.setWidth(5);
+    pen.setBrush(Qt::green);
+    painter.setPen(pen);
+    if(border->typeRedBlack){
+        painter.drawArc(x-size,y-size,size*2,size*2, 0, 360*16);
+    } else {
+        QPolygonF polygon;
+        polygon << QPointF(x, y) << QPointF(x+size, y) << QPointF(x + size, y + size) << QPointF(x, y+size);
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPolygon(polygon);
+    }
+    pen.setWidth(3);
+    pen.setBrush(Qt::black);
+    painter.setPen(pen);
+    border = nullptr;
 
 }
 
@@ -296,6 +325,7 @@ void drawingWidget::paintEvent(QPaintEvent * /* event */)
 {
     QPainter painter(this);
     paintTree(painter);
+    paintBorder(painter);
 
 }
 
@@ -315,26 +345,72 @@ void drawingWidget::setDrawingBTree(std::shared_ptr<drawingBNode> root){
     drawing_b_tree = std::make_shared<drawingBTree>(root);
 }
 
-void drawingWidget::findAndMark(int number, std::shared_ptr<drawingNode> node){
+void drawingWidget::findAndMarkNumber(int number){
     if(typeRedBlack){
-        if(!node)
-            node = drawing_tree->root;
-        while(node != nullptr){
-            if(node->value == number){
-                //auto prev_color = node->color;
-                node->color = Green;
-                quickRedraw();
-                //node->color = prev_color;
-                break;
-            }
-            else if(node->value > number){
-                node = node->left;
-            }
-            else {
-                node = node->right;
-            }
+        auto node = drawing_tree->root;
+        findAndMark(number, node);
+    } else {
+        auto node = drawing_b_tree->root;
+        findAndMark(number, node);
+    }
+}
+
+void drawingWidget::findAndMark(int number, std::shared_ptr<drawingNode> node){
+    if(!node)
+        node = drawing_tree->root;
+    while(node != nullptr){
+        if(node->value == number){
+            //auto prev_color = node->color;
+            int x = node->x;
+            int y = node->y;
+            int r = node->radius;
+            addBorder(x,y,r);
+            quickRedraw();
+            //node->color = prev_color;
+            break;
+        }
+        else if(node->value > number){
+            node = node->left;
+        }
+        else {
+            node = node->right;
         }
     }
+}
+
+void drawingWidget::findAndMark(int number, std::shared_ptr<drawingBNode> node){
+    if(!node)
+        node = drawing_b_tree->root;
+    while(node != nullptr){
+        int i = 0, n = node->value.size();
+        while(i < n && node->value[i] < number) i++;
+        if(i < n){
+            if(node->value[i] == number){
+                int x = node->x;
+                int y = node->y;
+                int r = node->size;
+                addBorder(x+r*i,y,r, false);
+                quickRedraw();
+                //node->color = prev_color;
+                return;
+            } else {
+                if(node->children.empty())
+                    return;
+                node = node->children[i];
+            }
+        }
+        else {
+            if(node->children.empty())
+                return;
+            node = node->children[i];
+        }
+    }
+
+}
+
+void drawingWidget::addBorder(int x, int y, int r, bool isRedBlack){
+    border = std::make_shared<Border>(x, y, r, isRedBlack);
+    updateEvents();
 }
 
 

@@ -21,7 +21,7 @@ bool normalNumber(QString str){
     return true;
 }
 
-void drawingWindow::redrawBorders(){
+void drawingWindow::redrawButtonBorders(){
     Ui()->insertLine->setStyleSheet("border: 1px solid black");
     Ui()->deleteLine->setStyleSheet("border: 1px solid black");
     Ui()->searchLine->setStyleSheet("border: 1px solid black");
@@ -47,13 +47,13 @@ void drawingWindow::insertNode(QLineEdit* line){
 
 void drawingWindow::on_insertButton_clicked()
 {
-    redrawBorders();
+    redrawButtonBorders();
     insertNode(Ui()->insertLine);
 }
 
 void drawingWindow::on_insertLine_returnPressed()
 {
-    redrawBorders();
+    redrawButtonBorders();
     insertNode(Ui()->insertLine);
 }
 
@@ -83,12 +83,12 @@ void drawingWindow::deleteNode(QLineEdit* line){
 }
 
 void drawingWindow::on_deleteButtton_clicked(){
-    redrawBorders();
+    redrawButtonBorders();
     deleteNode(Ui()->deleteLine);
 }
 
 void drawingWindow::on_deleteLine_returnPressed(){
-    redrawBorders();
+    redrawButtonBorders();
     deleteNode(Ui()->deleteLine);
 }
 
@@ -107,26 +107,29 @@ void drawingWindow::searchNode(QLineEdit* line){
             found = Ui()->drawWidget->bTree->includes(newNumber);
         }
         if(found)
-            line->setStyleSheet("border: 1px solid green");
+            line->setStyleSheet("border: 2px solid green");
         else
-            line->setStyleSheet("border: 1px solid yellow");
-        Ui()->drawWidget->redraw();
+            line->setStyleSheet("border: 2px solid yellow");
+        //Ui()->drawWidget->redraw();
     } else {
-        line->setStyleSheet("border: 1px solid red");
+        line->setStyleSheet("border: 2px solid red");
     }
     if(found){
-        Ui()->drawWidget->findAndMark(newNumber);
+        Ui()->drawWidget->findAndMarkNumber(newNumber);
+    } else {
+        Ui()->drawWidget->updateEvents();
     }
 }
 
 void drawingWindow::on_searchButton_clicked()
 {
-    redrawBorders();
+    redrawButtonBorders();
     searchNode(Ui()->searchLine);
+
 }
 
 void drawingWindow::on_searchLine_returnPressed()
 {
-    redrawBorders();
+    redrawButtonBorders();
     searchNode(Ui()->searchLine);
 }

@@ -38,7 +38,7 @@ private slots:
 
 private:
     Ui::drawingWindow *ui;
-    void redrawBorders();
+    void redrawButtonBorders();
     void deleteNode(QLineEdit* line);
     void insertNode(QLineEdit* line);
     void searchNode(QLineEdit* line);
